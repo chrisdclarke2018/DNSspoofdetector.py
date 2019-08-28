@@ -1,0 +1,18 @@
+#simple program to detect DNS spoofing attack
+
+from scapy.all import *
+dnsqueris={}
+def dnscheck(pkt):
+	if pkt.haslayer(DNSQR):
+		if (pkt[DNS].name in dnsqueris):
+			if (pkt[DNSRR].rdata==dnsqueris[pkt[DNS].name]):
+			   pass:
+			else:
+			   print('possible DNS spoof detected by',pkt[DNSRR].rdata)
+                else:
+			dnsqueris[pkt[DNS].name]=pkt[DNSRR][x].rdata
+
+
+
+sniff(filter="udp port 53", iface="wlan0", prn=dnscheck)
+
